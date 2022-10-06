@@ -6,6 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+
+//Test 코드 작성하는 이유
+// 1. 메서드는 하나의 기능을 가져야 함 - 책임을 분리할 수 있다.
+// 2. 각 기능마다 테스트 코드를 작성하면 유지 보수에 유리
+// 3. 시간 단축
+
 @DataJpaTest //db와 관련된 컴포넌트만 메모리에 로딩
 public class BookRepositoryTest {
 
