@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.jdbc.Sql;
 
 
 //Test 코드 작성하는 이유
@@ -77,6 +78,7 @@ public class BookRepositoryTest {
     }
 
     // 3. 책 한 권 보기
+    @Sql("classpath:db/tableInit.sql")
     @Test
     public void 책한권보기_test() {
         //given
@@ -91,7 +93,21 @@ public class BookRepositoryTest {
         assertEquals(author, bookPS.getAuthor());
     }
 
+
+    /*
+     * Junit 테스트
+     * 
+     * 1. 테스트 메서드 3개가 있다. (순서 보장이 안된다) - Order() annotation 순서 보장
+     * 2. 테스트 메서드가 하나 실행 후 종료되면 데이터가 초기화된다. (@DataJpaTest - @AutoConfigureTestDatabase)
+     *      - Transactional() annotation
+     *      - 트랜잭션 종료 -> 데이터 초기화
+     *      ** primary key auto_increment 값이 초기화가 안됨
+     * 
+     *  => id를 찾는 모든 테스트에는 '@Sql("classpath:db/tableInit.sql")'를 붙여주는 게 좋음
+     */
+    
     // 4. 책 삭제
+    @Sql("classpath:db/tableInit.sql")
     @Test
     public void 책삭제_test() {
         // given
@@ -106,5 +122,5 @@ public class BookRepositoryTest {
 
     // 5. 책 수정
 
-    
+
 }
