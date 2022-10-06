@@ -1,11 +1,11 @@
 package site.metacoding.junitproject.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +35,8 @@ public class BookRepositoryTest {
                         .build();
         bookRepository.save(book);
     } // 트랜잭션 종료 됐다면 말이 안됨
-    // 가정 1: [데이터준비() + 1 책등록] (T), [데이터준비() + 2 책 목록보기] (T)
-    // 가정 2: [데이터준비() + 1 책등록 + 데이터준비() + 2 책 목록보기] (T)
+    // 가정 1: [데이터준비() + 1 책등록] (T), [데이터준비() + 2 책 목록보기] (T) -> 사이즈 1 (검증 완료)
+    // 가정 2: [데이터준비() + 1 책등록 + 데이터준비() + 2 책 목록보기] (T) -> 사이즈 2 (검증 실패)
 
     // 1. 책 등록
     @Test
@@ -91,7 +91,20 @@ public class BookRepositoryTest {
         assertEquals(author, bookPS.getAuthor());
     }
 
-    // 4. 책 수정
+    // 4. 책 삭제
+    @Test
+    public void 책삭제_test() {
+        // given
+        Long id = 1L;
 
-    // 5. 책 삭제
+        // when
+        bookRepository.deleteById(id);
+
+        // then
+        assertFalse(bookRepository.findById(id).isPresent());
+    }
+
+    // 5. 책 수정
+
+    
 }
