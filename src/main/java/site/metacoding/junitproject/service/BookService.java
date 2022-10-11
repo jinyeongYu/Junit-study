@@ -48,6 +48,10 @@ public class BookService {
     }
 
     // 4. 책 삭제
+    @Transactional(rollbackFor = RuntimeException.class)
+    public void 책삭제하기(Long id) {
+        bookRepository.deleteById(id); // 못찾아도 오류가 나지는 않음
+    }
 
     // 5. 책 수정
     
