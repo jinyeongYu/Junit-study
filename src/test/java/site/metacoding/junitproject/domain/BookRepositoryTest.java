@@ -123,7 +123,7 @@ public class BookRepositoryTest {
     // 5. 책 수정
     @Sql("classpath:db/tableInit.sql")
     @Test
-    public void 책수정_test(){
+    public void 책수정_test() {
         // given
         Long id = 1L;
         String title = "junit5";
@@ -153,6 +153,19 @@ public class BookRepositoryTest {
         assertEquals(id, bookPS.getId());
         assertEquals(title, bookPS.getTitle());
         assertEquals(author, bookPS.getAuthor());
+
+
+        /**
+         * Rollback
+         * 
+         * 
+         * Junit -> 테스트 도구(라이브러리)
+         *      1. 메서드 실행(트랜잭션 시작) -> 종료(트랜잭션 종료) -> Rollback
+         * 
+         * 
+         * 1. BeforeEach(1건 save) -> 트랜잭션
+         * 2. update test(1건 update)
+         */
 
     }
 
