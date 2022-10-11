@@ -121,7 +121,7 @@ public class BookRepositoryTest {
     }
 
     // 5. 책 수정
-    @Sql("classpath:db/tableInit.sql")
+    @Sql("classpath:db/tableInit.sql") //auto_increment 문제 때문에 table drop 했다가 다시 생성 -> id 검증할 때 필수.. 실제 서버로 테스트하려면 id 검증하지 마세요!
     @Test
     public void 책수정_test() {
         // given
@@ -158,13 +158,17 @@ public class BookRepositoryTest {
         /**
          * Rollback
          * 
+         * 메모리 -> 하드디스크 (커밋)
+         * 메모리에 있는 data 지우기 -> 롤백
+         * 
          * 
          * Junit -> 테스트 도구(라이브러리)
          *      1. 메서드 실행(트랜잭션 시작) -> 종료(트랜잭션 종료) -> Rollback
          * 
          * 
-         * 1. BeforeEach(1건 save) -> 트랜잭션
-         * 2. update test(1건 update)
+         * 1. BeforeEach(1건 save) -> 트랜잭션 시작
+         *      -> 테이블 drop
+         * 2. update test(1건 update) -> 트랜잭션 종료
          */
 
     }
