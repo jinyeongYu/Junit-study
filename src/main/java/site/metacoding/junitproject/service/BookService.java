@@ -12,6 +12,7 @@ import site.metacoding.junitproject.domain.Book;
 import site.metacoding.junitproject.domain.BookRepository;
 import site.metacoding.junitproject.util.MailSender;
 import site.metacoding.junitproject.web.dto.request.BookSaveReqDto;
+import site.metacoding.junitproject.web.dto.response.BookListRespDto;
 import site.metacoding.junitproject.web.dto.response.BookRespDto;
 
 @RequiredArgsConstructor
@@ -38,7 +39,7 @@ public class BookService {
      */
 
     // 2. 책 목록 보기
-    public List<BookRespDto> 책목록보기() {
+    public BookListRespDto 책목록보기() {
         // 본코드에 문제가 있나??
         List<BookRespDto> dtos = bookRepository.findAll().stream()
                 // .map(new BookRespDto()::toDto) <= 얘 때문에! new가 두번 X, new는 한번 실행하고 toDto() method만 두번 샐행
@@ -53,7 +54,8 @@ public class BookService {
         //     System.out.println(dto.getTitle());
         // });
         
-        return dtos;
+        BookListRespDto bookListRespDto = BookListRespDto.builder().bookList(dtos).build();
+        return bookListRespDto;
     }
 
     // 3. 책 한 권 보기

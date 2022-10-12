@@ -23,6 +23,7 @@ import site.metacoding.junitproject.domain.BookRepository;
 import site.metacoding.junitproject.util.MailSender;
 import site.metacoding.junitproject.util.MailSenderStub;
 import site.metacoding.junitproject.web.dto.request.BookSaveReqDto;
+import site.metacoding.junitproject.web.dto.response.BookListRespDto;
 import site.metacoding.junitproject.web.dto.response.BookRespDto;
 
 @ExtendWith(MockitoExtension.class) //Mockito -> 가짜 객체 보관 환경
@@ -62,6 +63,7 @@ public class BookServiceTest {
         assertThat(dto.getAuthor()).isEqualTo(bookRespDto.getAuthor());
     }
 
+    // 체크 포인트
     @Test
     public void 책목록보기_테스트() {
         // given (parameter로 들어올 데이터)
@@ -73,20 +75,20 @@ public class BookServiceTest {
         when(bookRepository.findAll()).thenReturn(books);
 
         // when (실행)
-        List<BookRespDto> bookRspDtoList = bookService.책목록보기();
+        BookListRespDto bookListRspDto = bookService.책목록보기();
 
         // print
-        bookRspDtoList.stream().forEach(dto -> {
-            System.out.println(dto.getId());
-            System.out.println(dto.getTitle());
-            System.out.println("=======================");
-        });
+        // bookListRspDto.stream().forEach(dto -> {
+        //     System.out.println(dto.getId());
+        //     System.out.println(dto.getTitle());
+        //     System.out.println("=======================");
+        // });
 
         // then (검증)
-        assertThat(bookRspDtoList.get(0).getTitle()).isEqualTo("junit강의");
-        assertThat(bookRspDtoList.get(0).getAuthor()).isEqualTo("메타코딩");
-        assertThat(bookRspDtoList.get(1).getTitle()).isEqualTo("spring강의");
-        assertThat(bookRspDtoList.get(1).getAuthor()).isEqualTo("겟인데어");
+        assertThat(bookListRspDto.getItems().get(0).getTitle()).isEqualTo("junit강의");
+        assertThat(bookListRspDto.getItems().get(0).getAuthor()).isEqualTo("메타코딩");
+        assertThat(bookListRspDto.getItems().get(1).getTitle()).isEqualTo("spring강의");
+        assertThat(bookListRspDto.getItems().get(1).getAuthor()).isEqualTo("겟인데어");
     }
 
     @Test
