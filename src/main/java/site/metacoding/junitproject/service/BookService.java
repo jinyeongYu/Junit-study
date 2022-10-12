@@ -39,9 +39,20 @@ public class BookService {
 
     // 2. 책 목록 보기
     public List<BookRespDto> 책목록보기() {
-        return bookRepository.findAll().stream()
-                .map(new BookRespDto()::toDto)
+        // 본코드에 문제가 있나??
+        List<BookRespDto> dtos = bookRepository.findAll().stream()
+                // .map(new BookRespDto()::toDto) <= 얘 때문에!
+                .map(bookPS -> new BookRespDto().toDto(bookPS))
                 .collect(Collectors.toList());
+
+        // print
+        // dtos.stream().forEach(dto -> {
+        //     System.out.println("======================= 본코드");
+        //     System.out.println(dto.getId());
+        //     System.out.println(dto.getTitle());
+        // });
+        
+        return dtos;
     }
 
     // 3. 책 한 권 보기
