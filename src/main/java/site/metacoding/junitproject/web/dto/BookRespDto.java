@@ -1,5 +1,6 @@
 package site.metacoding.junitproject.web.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import site.metacoding.junitproject.domain.Book;
@@ -18,6 +19,10 @@ public class BookRespDto {
         return this;
     }
 
-
-
+    @Builder
+    public BookRespDto(Long id, String title, String author) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+    }
 }

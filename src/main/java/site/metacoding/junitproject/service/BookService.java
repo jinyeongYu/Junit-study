@@ -41,8 +41,9 @@ public class BookService {
     public List<BookRespDto> 책목록보기() {
         // 본코드에 문제가 있나??
         List<BookRespDto> dtos = bookRepository.findAll().stream()
-                // .map(new BookRespDto()::toDto) <= 얘 때문에!
-                .map(bookPS -> new BookRespDto().toDto(bookPS))
+                // .map(new BookRespDto()::toDto) <= 얘 때문에! new가 두번 X, new는 한번 실행하고 toDto() method만 두번 샐행
+                .map(Book::toDto)
+                // .map(bookPS -> new BookRespDto().toDto(bookPS))
                 .collect(Collectors.toList());
 
         // print
@@ -59,7 +60,9 @@ public class BookService {
     public BookRespDto 책한권보기(Long id) {
         Optional<Book> bookOP = bookRepository.findById(id);
         if(bookOP.isPresent()) { // 찾았다면
-            return new BookRespDto().toDto(bookOP.get());
+            Book bookPS = bookOP.get();
+            return bookPS.toDto();
+            // return new BookRespDto().toDto(bookOP.get());
         } else {
             throw new RuntimeException("해당 아이디를 찾을 수 없습니다.");
         }
