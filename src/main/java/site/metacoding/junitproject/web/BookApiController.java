@@ -44,12 +44,11 @@ public class BookApiController { // composition = has 관계
             for(FieldError fe : bindingResult.getFieldErrors()) {
                 erroMap.put(fe.getField(), fe.getDefaultMessage());
             }
+            System.out.println("==============================");
+            System.out.println(erroMap.toString());
+            System.out.println("==============================");
 
-            // System.out.println("==============================");
-            // System.out.println(erroMap.toString());
-            // System.out.println("==============================");
-            
-            return new ResponseEntity<>(CMRespDto.builder().code(-1).msg(erroMap.toString()).body(bookRespDto).build(), HttpStatus.BAD_REQUEST); // 400 = 요청이 잘못됨
+            throw new RuntimeException(erroMap.toString());
         }
 
         return new ResponseEntity<>(CMRespDto.builder().code(1).msg("글 저장 성공").body(bookRespDto).build(), HttpStatus.CREATED); // 201 = insert
